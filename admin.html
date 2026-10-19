@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabulao Clinic - Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="login.css" />
+  <style type="text/tailwindcss">
+    @layer components {
+      .inp { @apply w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:ring-2 focus:ring-[#0f4c4a] focus:border-[#0f4c4a]; }
+      .btn { @apply px-4 py-2 rounded-lg bg-[#0f4c4a] hover:bg-[#0b3c3d] text-white text-sm font-semibold transition; }
+      .card { @apply bg-white rounded-xl border border-gray-200 p-5; }
+      .lbl { @apply block text-xs font-semibold text-gray-600 mb-1; }
+      .th { @apply px-4 py-3 font-medium text-left; }
+      .nav { @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-white/10; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full md:translate-x-0 md:sticky md:top-0 md:h-screen bg-[#0f4c4a] text-white flex flex-col justify-between transition-transform duration-200">
+    <div>
+      <div class="flex items-center gap-3 px-5 py-6 border-b border-white/10">
+        <i class="fa-solid fa-heart-pulse text-2xl"></i>
+        <div><h2 class="font-bold leading-tight">NC Sabulao</h2><p class="text-[11px] text-teal-100/80 leading-snug">Polyclinic, Diagnostic Center &amp; Pharmacy</p></div>
+      </div>
+      <nav class="p-3 space-y-1">
+        <a href="#dashboard" data-view="dashboard" class="nav"><i class="fa-solid fa-house w-5"></i> Dashboard</a>
+        <a href="#patients" data-view="patients" class="nav"><i class="fa-solid fa-user-group w-5"></i> Patients</a>
+        <a href="#appointments" data-view="appointments" class="nav"><i class="fa-solid fa-calendar-check w-5"></i> Appointments</a>
+        <a href="#records" data-view="records" class="nav"><i class="fa-solid fa-file-medical w-5"></i> Medical Records</a>
+        <a href="#pharmacy" data-view="pharmacy" class="nav"><i class="fa-solid fa-pills w-5"></i> Pharmacy</a>
+        <a href="#reports" data-view="reports" class="nav"><i class="fa-solid fa-chart-line w-5"></i> Reports</a>
+        <a href="#settings" data-view="settings" class="nav"><i class="fa-solid fa-gear w-5"></i> Settings</a>
+      </nav>
+    </div>
+    <div class="p-4">
+      <button id="adminLogoutBtn" type="button" class="nav w-full text-left"><i class="fa-solid fa-right-from-bracket w-5"></i> Logout</button>
+    </div>
+  </aside>
+  <div id="backdrop" class="hidden fixed inset-0 bg-black/40 z-30 md:hidden"></div>
+
+  <div class="flex-1 min-w-0">
+    <header class="bg-white border-b border-gray-200 px-4 md:px-8 py-3 flex items-center gap-3">
+      <button id="menuBtn" type="button" class="md:hidden text-gray-600 text-xl" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="relative flex-1 max-w-md">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+        <input id="searchInput" type="text" placeholder="Search patient by name or username..." class="inp pl-9" />
+      </div>
+      <div class="ml-auto flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#0f4c4a] text-white grid place-items-center font-semibold text-sm">A</div><span class="hidden sm:block text-sm font-semibold">Admin</span></div>
+    </header>
+
+    <main class="p-4 md:p-8">
+
+      <!-- DASHBOARD -->
+      <section data-panel="dashboard" class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+          <div><h1 class="text-2xl font-bold">Welcome back, Admin</h1><p class="text-sm text-gray-500">Here is what is happening at NC Sabulao Clinic today.</p></div>
+          <div class="text-sm bg-white border border-gray-200 rounded-lg px-3 py-2 self-start"><i class="fa-regular fa-calendar mr-2 text-[#0f4c4a]"></i><span id="todayDate"></span></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="card"><p class="text-sm text-gray-500">Total patients</p><p id="statPatients" class="text-3xl font-bold mt-1">0</p></div>
+          <div class="card"><p class="text-sm text-gray-500">Today's appointments</p><p id="statAppointments" class="text-3xl font-bold mt-1">0</p></div>
+          <div class="card"><p class="text-sm text-gray-500">Available services</p><p id="statServices" class="text-3xl font-bold mt-1">0</p></div>
+          <div class="card"><p class="text-sm text-gray-500">Total revenue</p><p id="statRevenue" class="text-3xl font-bold mt-1">₱0</p></div>
+        </div>
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div class="xl:col-span-2 space-y-6">
+            <div class="card !p-0"><h2 class="font-semibold px-5 py-4 border-b border-gray-100">Upcoming appointments</h2>
+              <div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Date</th><th class="th">Time</th><th class="th">Patient</th><th class="th">Service</th><th class="th">Status</th></tr></thead><tbody id="dashAppts" class="divide-y divide-gray-100"></tbody></table></div></div>
+            <div class="card !p-0"><h2 class="font-semibold px-5 py-4 border-b border-gray-100">Registered patients</h2>
+              <div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Name</th><th class="th">Username</th><th class="th">Email</th><th class="th">Mobile</th></tr></thead><tbody id="dashPatients" class="divide-y divide-gray-100"></tbody></table></div></div>
+          </div>
+          <div class="card self-start"><h2 class="font-semibold mb-4">Quick actions</h2>
+            <div class="grid gap-2 text-sm">
+              <a href="#appointments" data-view="appointments" class="btn text-center"><i class="fa-solid fa-calendar-plus mr-2"></i>Book appointment</a>
+              <a href="#patients" data-view="patients" class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 text-center"><i class="fa-solid fa-user-plus mr-2 text-[#0f4c4a]"></i>Add patient</a>
+              <a href="#records" data-view="records" class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 text-center"><i class="fa-solid fa-file-invoice mr-2 text-[#0f4c4a]"></i>Add record</a>
+              <a href="#pharmacy" data-view="pharmacy" class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 text-center"><i class="fa-solid fa-prescription-bottle-medical mr-2 text-[#0f4c4a]"></i>Check pharmacy</a>
+            </div></div>
+        </div>
+      </section>
+
+      <!-- PATIENTS -->
+      <section data-panel="patients" class="hidden space-y-6">
+        <h1 class="text-2xl font-bold">Patients</h1>
+        <form id="patientForm" class="card grid sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2 font-semibold">Add walk-in patient</div>
+          <div><label class="lbl">Full name</label><input id="pName" class="inp" required /></div>
+          <div><label class="lbl">Mobile (11 digits)</label><input id="pMobile" class="inp" pattern="[0-9]{11}" maxlength="11" required /></div>
+          <div><label class="lbl">Age</label><input id="pAge" type="number" min="0" max="120" class="inp" required /></div>
+          <div><label class="lbl">Gender</label><select id="pGender" class="inp"><option>Female</option><option>Male</option><option>Other</option></select></div>
+          <div class="sm:col-span-2"><label class="lbl">Email (optional)</label><input id="pEmail" type="email" class="inp" /></div>
+          <div class="sm:col-span-2"><button class="btn">Save patient</button></div>
+        </form>
+        <div class="card !p-0 overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Name</th><th class="th">Username</th><th class="th">Email</th><th class="th">Mobile</th></tr></thead><tbody id="patientsBody" class="divide-y divide-gray-100"></tbody></table></div>
+      </section>
+
+      <!-- APPOINTMENTS (Task 3: calendar + time-slot picker) -->
+      <section data-panel="appointments" class="hidden space-y-6">
+        <h1 class="text-2xl font-bold">Appointments</h1>
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="card">
+            <div class="flex items-center justify-between mb-4">
+              <button id="prevMonth" type="button" class="w-8 h-8 rounded-lg hover:bg-gray-100" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
+              <span id="calTitle" class="font-semibold"></span>
+              <button id="nextMonth" type="button" class="w-8 h-8 rounded-lg hover:bg-gray-100" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="grid grid-cols-7 text-center text-xs text-gray-400 mb-2"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+            <div id="calGrid" class="grid grid-cols-7 gap-1 text-sm"></div>
+            <p class="text-xs text-gray-400 mt-3">Clinic hours: Mon–Sat, 8:00 AM–5:00 PM (lunch 12:00–1:00 PM). Closed on Sundays.</p>
+          </div>
+          <form id="apptForm" class="card space-y-4">
+            <div><p class="lbl">Available times <span id="slotDate" class="font-normal text-gray-500"></span></p>
+              <div id="slotGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2"><p class="col-span-full text-sm text-gray-400">Pick a date to see open times.</p></div></div>
+            <div><label class="lbl">Patient</label><select id="aPatient" class="inp" required></select></div>
+            <div><label class="lbl">Service</label><select id="aService" class="inp"></select></div>
+            <p id="aMsg" class="text-sm hidden"></p>
+            <button class="btn w-full">Book appointment</button>
+          </form>
+        </div>
+        <div class="card !p-0 overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Date</th><th class="th">Time</th><th class="th">Patient</th><th class="th">Service</th><th class="th">Status</th><th class="th">Action</th></tr></thead><tbody id="apptBody" class="divide-y divide-gray-100"></tbody></table></div>
+      </section>
+
+      <!-- MEDICAL RECORDS -->
+      <section data-panel="records" class="hidden space-y-6">
+        <h1 class="text-2xl font-bold">Medical records</h1>
+        <form id="recordForm" class="card grid sm:grid-cols-2 gap-4">
+          <div><label class="lbl">Patient</label><select id="rPatient" class="inp" required></select></div>
+          <div><label class="lbl">Visit date</label><input id="rDate" type="date" class="inp" required /></div>
+          <div class="sm:col-span-2"><label class="lbl">Diagnosis</label><input id="rDiag" class="inp" required /></div>
+          <div class="sm:col-span-2"><label class="lbl">Notes</label><textarea id="rNotes" rows="3" class="inp"></textarea></div>
+          <div class="sm:col-span-2"><button class="btn">Save record</button></div>
+        </form>
+        <div class="card !p-0 overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Date</th><th class="th">Patient</th><th class="th">Diagnosis</th><th class="th">Notes</th></tr></thead><tbody id="recordBody" class="divide-y divide-gray-100"></tbody></table></div>
+      </section>
+
+      <!-- PHARMACY -->
+      <section data-panel="pharmacy" class="hidden space-y-6">
+        <h1 class="text-2xl font-bold">Pharmacy</h1>
+        <form id="pharmForm" class="card grid sm:grid-cols-3 gap-4">
+          <div><label class="lbl">Medicine</label><input id="mName" class="inp" required /></div>
+          <div><label class="lbl">Stock</label><input id="mStock" type="number" min="0" class="inp" required /></div>
+          <div><label class="lbl">Price (₱)</label><input id="mPrice" type="number" min="0" step="0.01" class="inp" required /></div>
+          <div class="sm:col-span-3"><button class="btn">Add medicine</button></div>
+        </form>
+        <div class="card !p-0 overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Medicine</th><th class="th">Stock</th><th class="th">Price</th></tr></thead><tbody id="pharmBody" class="divide-y divide-gray-100"></tbody></table></div>
+      </section>
+
+      <!-- REPORTS -->
+      <section data-panel="reports" class="hidden space-y-6">
+        <h1 class="text-2xl font-bold">Reports</h1>
+        <div id="reportBox" class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4"></div>
+        <div class="card !p-0 overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 text-gray-500"><tr><th class="th">Service</th><th class="th">Confirmed bookings</th><th class="th">Revenue</th></tr></thead><tbody id="reportBody" class="divide-y divide-gray-100"></tbody></table></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section data-panel="settings" class="hidden space-y-6">
+        <h1 class="text-2xl font-bold">Settings</h1>
+        <div class="card space-y-3 max-w-lg">
+          <h2 class="font-semibold">Reset demo data</h2>
+          <p class="text-sm text-gray-500">Clears walk-in patients, appointments, medical records, and medicines. Registered client accounts are kept.</p>
+          <button id="resetBtn" type="button" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold">Clear demo data</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>

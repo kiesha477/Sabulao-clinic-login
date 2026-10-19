@@ -1,0 +1,198 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NC Sabulao Polyclinic, Diagnostic Center & Pharmacy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="login.css" />
+  <style type="text/tailwindcss">
+    @layer components {
+      .tb { @apply px-3 py-2 hover:bg-white/15 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-white; }
+      .card { @apply bg-white rounded-xl border border-gray-200 p-5; }
+      .btn { @apply inline-block px-5 py-2.5 rounded-lg bg-[#0f4c4a] hover:bg-[#0b3c3d] text-white text-sm font-semibold transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0f4c4a]; }
+      .h2 { @apply text-xl font-bold text-[#0f4c4a] mb-4; }
+      .flink { @apply hover:underline focus-visible:underline; }
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid #0f4c4a; outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  
+<!-- Reusable placeholder seal. Palitan ng official Seal of the Republic of the Philippines image. -->
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <symbol id="seal" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#fff" stroke="#0f4c4a" stroke-width="4"/><circle cx="50" cy="50" r="34" fill="none" stroke="#0f4c4a" stroke-width="2" stroke-dasharray="3 3"/><path d="M50 22l7 18h19l-15 11 6 19-17-12-17 12 6-19-15-11h19z" fill="#0f4c4a"/></symbol>
+</svg>
+  
+<a href="#content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">Skip to main content</a>
+  
+<!-- 1. TOP BAR -->
+<div class="bg-[#0b3c3d] text-white text-sm sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center gap-x-1 gap-y-2">
+    <svg class="w-8 h-8 mr-2" role="img" aria-label="Seal of the Republic of the Philippines (placeholder)"><use href="#seal"/></svg>
+    <nav aria-label="Top bar" class="flex flex-wrap items-center">
+      <a href="index.html" class="tb font-semibold">Home</a>
+      <a href="#services" class="tb">Products & Services</a>
+      <a href="#contact" class="tb">Contact Us</a>
+      <a href="#charter" class="tb">Citizen's Charter</a>
+    </nav>
+    <form id="searchForm" role="search" class="ml-auto flex">
+      <label for="searchInput" class="sr-only">Search the site</label>
+      <input id="searchInput" type="search" placeholder="Search services..." class="px-3 py-1.5 rounded-l-lg text-gray-800 text-sm w-40 sm:w-56" />
+      <button class="px-3 rounded-r-lg bg-[#0f4c4a] border border-white/40" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+  </div>
+</div>
+  
+<!-- 2. MASTHEAD -->
+<header class="bg-white border-b border-gray-200">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
+    <div class="h-[72px] w-[72px] rounded-xl bg-[#0f4c4a] text-white grid place-items-center shrink-0" role="img" aria-label="NC Sabulao logo">
+      <i class="fa-solid fa-heart-pulse text-3xl"></i>
+    </div>
+    <div class="self-stretch w-px bg-gray-300"></div>
+    <div>
+      <p class="text-xs uppercase tracking-widest text-gray-500">Republic of the Philippines</p>
+      <h1 class="text-xl sm:text-2xl font-bold text-[#0f4c4a] leading-tight">NC Sabulao Polyclinic, Diagnostic Center & Pharmacy</h1>
+      <p class="text-sm text-gray-600 italic">"Your Health Our Priority"</p>
+    </div>
+  </div>
+</header>
+  
+  
+<!-- 4. BANNER -->
+<section aria-label="Featured" class="relative max-w-6xl mx-auto mt-4 px-4" id="banner">
+  <div class="relative overflow-hidden rounded-xl h-64 sm:h-80">
+    <div class="slide absolute inset-0 flex items-center bg-gradient-to-r from-[#0b3c3d] to-[#1b6b68] text-white px-8 sm:px-14">
+      <div class="max-w-xl"><h2 class="text-2xl sm:text-4xl font-bold mb-3">Quality healthcare for a healthier community</h2><p class="mb-5 text-teal-50">Accessible, quality, and compassionate healthcare for you and your family.</p><a href="login.html" class="inline-block px-5 py-2.5 rounded-lg bg-white text-[#0f4c4a] font-semibold">Create an account</a></div>
+    </div>
+    <div class="slide absolute inset-0 hidden items-center bg-gradient-to-r from-[#0f4c4a] to-[#2a8782] text-white px-8 sm:px-14">
+      <div class="max-w-xl"><h2 class="text-2xl sm:text-4xl font-bold mb-3">Consultation, laboratory & diagnostics under one roof</h2><p class="mb-5 text-teal-50">See our clinic services and what we offer.</p><a href="#services" class="inline-block px-5 py-2.5 rounded-lg bg-white text-[#0f4c4a] font-semibold">View services</a></div>
+    </div>
+    <button id="prevSlide" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 text-[#0f4c4a]" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+    <button id="nextSlide" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 text-[#0f4c4a]" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+    <div id="dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2"></div>
+  </div>
+</section>
+  
+<!-- 5. CONTENT AREA (plain white #FFFFFF, 3 columns on desktop) -->
+<main id="content" style="background:#FFFFFF" class="max-w-6xl mx-auto mt-4 px-4 py-8 border-x border-gray-200">
+  <div class="grid lg:grid-cols-3 gap-8">
+  
+    <div class="lg:col-span-2 space-y-10">
+      <section id="about">
+        <h2 class="h2">About us</h2>
+        <p class="leading-relaxed text-gray-700">NC Sabulao Polyclinic, Diagnostic Center and Pharmacy is dedicated to providing accessible, quality, and compassionate healthcare services for you and your family. Create an account to manage your health profile and appointments online.</p>
+      </section>
+  
+      <section id="services">
+        <h2 class="h2">Products & Services</h2>
+        <p id="noResults" class="hidden text-sm text-red-600 mb-3">No services match your search.</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <article class="card svc"><i class="fa-solid fa-user-doctor text-2xl text-[#0f4c4a] mb-2"></i><h3 class="font-semibold">Consultation</h3><p class="text-sm text-gray-600">See a doctor for diagnosis and treatment advice.</p></article>
+          <article class="card svc"><i class="fa-solid fa-flask-vial text-2xl text-[#0f4c4a] mb-2"></i><h3 class="font-semibold">Laboratory</h3><p class="text-sm text-gray-600">Laboratory tests with results you can rely on.</p></article>
+          <article class="card svc"><i class="fa-solid fa-x-ray text-2xl text-[#0f4c4a] mb-2"></i><h3 class="font-semibold">Diagnostics</h3><p class="text-sm text-gray-600">Diagnostic center services for accurate results.</p></article>
+          <article class="card svc"><i class="fa-solid fa-syringe text-2xl text-[#0f4c4a] mb-2"></i><h3 class="font-semibold">Vaccination</h3><p class="text-sm text-gray-600">Protection for you and your family.</p></article>
+          <article class="card svc"><i class="fa-solid fa-stethoscope text-2xl text-[#0f4c4a] mb-2"></i><h3 class="font-semibold">Check-up</h3><p class="text-sm text-gray-600">Regular check-ups to keep track of your health.</p></article>
+          <article id="pharmacy" class="card svc"><i class="fa-solid fa-pills text-2xl text-[#0f4c4a] mb-2"></i><h3 class="font-semibold">Pharmacy</h3><p class="text-sm text-gray-600">Medicines available right in the clinic.</p></article>
+        </div>
+      </section>
+  
+      <section id="charter">
+        <h2 class="h2">Citizen's Charter</h2>
+        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+          <div class="card"><h3 class="font-semibold mb-1">Mandate</h3><p class="text-gray-600">Provide accessible, quality, and compassionate healthcare.</p></div>
+          <div class="card"><h3 class="font-semibold mb-1">Frontline services</h3><p class="text-gray-600">Consultation, laboratory, diagnostics, vaccination, check-up, and pharmacy.</p></div>
+          <div class="card"><h3 class="font-semibold mb-1">Steps to avail</h3><ol class="list-decimal list-inside text-gray-600"><li>Register an account</li><li>Sign in</li><li>Choose a service, date, and time</li><li>Wait for confirmation</li></ol></div>
+          <div class="card"><h3 class="font-semibold mb-1">Service standards</h3><p class="text-gray-400 italic">To be provided by the clinic (processing times, fees, responsible staff).</p></div>
+        </div>
+      </section>
+  
+      <section id="faq">
+        <h2 class="h2">Frequently Asked Questions</h2>
+        <div class="space-y-2">
+          <details class="card !p-4"><summary class="font-semibold cursor-pointer">How do I create an account?</summary><p class="text-sm text-gray-600 mt-2">Click Sign In / Register, choose Register, fill in your details, and create a password with at least one capital letter and one special symbol.</p></details>
+          <details class="card !p-4"><summary class="font-semibold cursor-pointer">What are your clinic hours?</summary><p class="text-sm text-gray-600 mt-2">Monday to Saturday, 8:00 AM to 5:00 PM, with a lunch break from 12:00 to 1:00 PM. Closed on Sundays.</p></details>
+          <details class="card !p-4"><summary class="font-semibold cursor-pointer">Is my personal information safe?</summary><p class="text-sm text-gray-600 mt-2">We recognize our obligation to secure and protect the personal data you give us. See the Data Privacy notice on this page.</p></details>
+        </div>
+      </section>
+    </div>
+  
+    <aside class="space-y-6">
+      <section id="contact" class="card">
+        <h2 class="font-bold text-[#0f4c4a] mb-3">Contact Us</h2>
+        <ul class="text-sm text-gray-600 space-y-2">
+          <li><i class="fa-solid fa-location-dot w-5 text-[#0f4c4a]"></i> [Clinic address]</li>
+          <li><i class="fa-solid fa-phone w-5 text-[#0f4c4a]"></i> [Phone number]</li>
+          <li><i class="fa-solid fa-envelope w-5 text-[#0f4c4a]"></i> [Email address]</li>
+        </ul>
+      </section>
+  
+      <section class="card">
+        <h2 class="font-bold text-[#0f4c4a] mb-3">Feedback</h2>
+        <form id="feedbackForm" class="space-y-3">
+          <div><label for="fbName" class="block text-xs font-semibold text-gray-600 mb-1">Name</label><input id="fbName" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm" /></div>
+          <div><label for="fbMsg" class="block text-xs font-semibold text-gray-600 mb-1">Message</label><textarea id="fbMsg" rows="3" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm"></textarea></div>
+          <button class="btn w-full">Send feedback</button>
+          <p id="fbOk" class="hidden text-sm text-green-700" role="status">Thank you for your feedback!</p>
+        </form>
+      </section>
+  
+      <section id="privacy" class="card">
+        <h2 class="font-bold text-[#0f4c4a] mb-2"><i class="fa-solid fa-shield-halved mr-1"></i>Data Privacy</h2>
+        <p class="text-sm text-gray-600">We secure and protect the personal data handled through our systems. Your details are used only for your care and appointments.</p>
+      </section>
+    </aside>
+  </div>
+</main>
+  
+<!-- 6. AGENCY FOOTER -->
+<footer class="bg-[#0f4c4a] text-white mt-4">
+  <div class="max-w-6xl mx-auto px-4 py-8 grid sm:grid-cols-4 gap-6 text-sm">
+    <div><h2 class="font-semibold mb-2">Downloads</h2><ul class="space-y-1 text-teal-50"><li><a href="#" class="flink">Forms</a></li><li><a href="#" class="flink">Manuals</a></li><li><a href="#" class="flink">Policies</a></li></ul></div>
+    <div><h2 class="font-semibold mb-2">Archives</h2><ul class="space-y-1 text-teal-50"><li><a href="#" class="flink">Articles by month</a></li><li><a href="#" class="flink">Press releases</a></li></ul></div>
+    <div><h2 class="font-semibold mb-2">Site Map</h2><ul class="space-y-1 text-teal-50"><li><a href="homepage.html" class="flink">Home</a></li><li><a href="#services" class="flink">Services</a></li><li><a href="#charter" class="flink">Citizen's Charter</a></li><li><a href="login.html" class="flink">Sign In / Register</a></li></ul></div>
+    <div><h2 class="font-semibold mb-2">FAQs</h2><ul class="space-y-1 text-teal-50"><li><a href="#faq" class="flink">Frequently asked questions</a></li><li><a href="#privacy" class="flink">Data privacy</a></li></ul></div>
+  </div>
+</footer>
+
+  
+<script>
+  // Banner slideshow
+  const slides = document.querySelectorAll('.slide'), dots = document.getElementById('dots');
+  let cur = 0, timer;
+  slides.forEach((_, i) => { const b = document.createElement('button'); b.className = 'w-2.5 h-2.5 rounded-full'; b.setAttribute('aria-label', 'Go to slide ' + (i + 1)); b.onclick = () => go(i); dots.appendChild(b); });
+  function go(n) {
+    cur = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => { s.classList.toggle('hidden', i !== cur); s.classList.toggle('flex', i === cur); });
+    [...dots.children].forEach((d, i) => d.className = 'w-2.5 h-2.5 rounded-full ' + (i === cur ? 'bg-white' : 'bg-white/50'));
+  }
+  function auto() { clearInterval(timer); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(() => go(cur + 1), 6000); }
+  document.getElementById('prevSlide').onclick = () => { go(cur - 1); auto(); };
+  document.getElementById('nextSlide').onclick = () => { go(cur + 1); auto(); };
+  document.getElementById('banner').onmouseenter = () => clearInterval(timer);
+  document.getElementById('banner').onmouseleave = auto;
+  go(0); auto();
+  
+  // Search filters the service cards
+  document.getElementById('searchForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll('.svc').forEach(c => { const ok = !q || c.textContent.toLowerCase().includes(q); c.classList.toggle('hidden', !ok); if (ok) shown++; });
+    document.getElementById('noResults').classList.toggle('hidden', shown > 0);
+    document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+  });
+  
+  // Feedback saved in localStorage
+  document.getElementById('feedbackForm').addEventListener('submit', e => {
+    e.preventDefault();
+    let list = []; try { list = JSON.parse(localStorage.getItem('feedback_db')) || []; } catch {}
+    list.push({ name: fbName.value.trim(), message: fbMsg.value.trim(), date: new Date().toISOString() });
+    localStorage.setItem('feedback_db', JSON.stringify(list));
+    e.target.reset(); document.getElementById('fbOk').classList.remove('hidden');
+  });
+</script>
+</body>
+</html>
